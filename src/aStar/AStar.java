@@ -77,22 +77,22 @@ public class AStar {
                                 	frontierList.add(neighbor);
                                     neighbor.setPreviousNode(current);
                                     neighbor.distanceFromStart = newDistanceFromStart;
-                                    //neighbor.heuristicDistanceToGoal = getEstimatedDistanceToGoal(neighbor.x, neighbor.y, map.getGoalLocation().x, map.getGoalLocation().y);
-                                    //neighbor.TotalDistanceFromGoal = neighbor.distanceFromStart + neighbor.heuristicDistanceToGoal;
-                                    neighbor.TotalDistanceFromGoal = neighbor.distanceFromStart;
+                                    neighbor.heuristicDistanceToGoal = getEstimatedDistanceToGoal(neighbor.x, neighbor.y, map.getGoalLocation().x, map.getGoalLocation().y);
+                                    neighbor.TotalDistanceFromGoal = neighbor.distanceFromStart + neighbor.heuristicDistanceToGoal;
+                                    //neighbor.TotalDistanceFromGoal = neighbor.distanceFromStart;
                                     //keep the frontier list sorted so you explore the best nodes first
-                                    //Collections.sort(frontierList);
+                                    Collections.sort(frontierList);
                                 } else {
-                                	System.out.println("Neighbor already on Fronter list... do nothing?");
-                                	// If the node is already on the frontier, do we need to do anything?  
-                                	// What if this path to the node is better than the first path we found to the node?
-                                	// You need to check if the new distance to the neighbor, newDistanceFromStart, is less than the old distance to the neighbor, neighbor.distanceFromStart) {
-                                        // if it is, you need to do the same things we did above:
-                                        //   --- Set the PreviousNode to the current node
-                                        //   --- Set the neighbor's distance from start to the newly calculated newDistanceFromStart
-                                        //   --- Set the neighbor's heuristic distance to goal using getEstimatedDistanceToGoal()
-                                        //   --- Set the neighbor's total distance from goal to the distance from start plus the heuristic distance to goal
-                                        //   --- Make sure the frontier list stays sorted
+                                    System.out.println("Neighbor already on Fronter list... do nothing?"); // If the node is already on the frontier, do we need to do anything?
+                                    // What if this path to the node is better than the first path we found to the node?
+                                    if(newDistanceFromStart < neighbor.distanceFromStart) // You need to check if the new distance to the neighbor, newDistanceFromStart, is less than the old distance to the neighbor, neighbor.distanceFromStart
+                                {       // if it is, you need to do the same things we did above:
+                                        neighbor.setPreviousNode(current);//   --- Set the PreviousNode to the current node
+                                        neighbor.distanceFromStart = newDistanceFromStart;//   --- Set the neighbor's distance from start to the newly calculated newDistanceFromStart
+                                        neighbor.heuristicDistanceToGoal = getEstimatedDistanceToGoal(neighbor.x, neighbor.y, map.getGoalLocation().x, map.getGoalLocation().y);//   --- Set the neighbor's heuristic distance to goal using getEstimatedDistanceToGoal()
+                                        neighbor.TotalDistanceFromGoal = neighbor.distanceFromStart + neighbor.heuristicDistanceToGoal;//   --- Set the neighbor's total distance from goal to the distance from start plus the heuristic distance to goal
+                                        Collections.sort(frontierList);//   --- Make sure the frontier list stays sorted
+                                }
   
                                 }
                         
